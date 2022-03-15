@@ -2,7 +2,7 @@
 
 ### Introduction
 
-This is the webpage of our DAC 2022 submission: Achieving Last-Mile Functional Coverage in Chip Design Verification.
+This is the webpage of our FSE 2022 submission: Achieving Last-Mile Functional Coverage in Testing Chip Design Implementations.
 
  Due to the limited space of the paper, we show the specific implementation details and parameter experiment results of LMT here.
 
