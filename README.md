@@ -9,7 +9,7 @@ Chips are the basis to support the rapid development of new technologies in the 
 
 In this paper, we propose the first technique targeting the significant challenge of improving last-mile functional coverage in CDI functional testing, called LMT, which does not rely on domain knowledge and internal information of CDIs. Specifically, LMT first leverages the Random Forest (RF) model to identify the relevant variables in test inputs to the coverage of last-mile functionality points so as to largely reduce the search space. It further incorporates the Generative Adversarial Network (GAN) to learn the complex constraints among variables so as to generate valid test inputs with a larger possibility. We conducted an extensive study on two industrial CDIs to evaluate the effectiveness of LMT. The results show that LMT achieves at least 49.27% and 75.09% higher last-mile functional coverage than the state-of-the-art CDI test input generation technique under the same number of test inputs, and saves at least 94.24% and 84.45% testing time to achieve the same functional coverage.
 
-***Note:*** Due to the confidentiality policy  company $\mathcal{W}$  , the source code and dataset of our work cannot be published (since the CDIs used in our study are both industrial-grade chips). To improve the feasibility and reproducibility of our work, we describe how to reproduce LMT and baselines and the configurations used in our study and release the detailed experimental results of LMT and other baselines, which demonstrate the effectiveness of LMT.
+***Note:*** Due to the confidentiality policy of company $\mathcal{W}$  , the source code and dataset of our work cannot be published (since the CDIs used in our study are both industrial-grade chips). To improve the credibility and reproducibility of our work, we describe how to reproduce LMT and baselines and the configurations used in our study and release the detailed experimental results of LMT and other baselines, which demonstrate the effectiveness of LMT.
 
 ### Datasets
 
@@ -18,13 +18,13 @@ In this paper, we propose the first technique targeting the significant challeng
 | MA   | 575   | 7,219  | 681  | 40K+   |
 | MB   | 672   | 81,563 | 353  | 40K+   |
 
-- `# Var` , `# FP`,`# FG`,`# SLOC`, denotes the number of variables in the test input, the number of functionality points, the number of functionality groups, and the number of source lines of code of the CDI, respectively.
+- `# Var` , `# FP`,`# FG` and `# SLOC` denote the number of variables in the test input, the number of functionality points, the number of functionality groups, and the number of source lines of code of the CDI, respectively.
 
 ### Implementations
 
 #### GAN-based Constraint Learning in LMT
 
-We use  the state-of-the-art Generative Adversarial Network , WGAN-GP[1],  to implement our constraint learning component. The details are shown below: 
+We use the state-of-the-art Generative Adversarial Network, WGAN-GP[1], to implement our constraint learning component. The details are shown below: 
 
 ***Generator*:** The generator is composed of four Linear Layers. The input dimension is 100 and the output dimension is the same as the input dimension of the chip design. RELU is used as the activation function of the hidden layer. The activation function of the output layer is `Sigmoid`.
 
@@ -48,11 +48,11 @@ We use `sklearn.ensemble.RandomForestClassifier` to implement the random forest 
 - `n_jobs`:10
   - The number of jobs to run in parallel. 
 
-The remaining parameters are set to be the default .
+The remaining parameters are set to be the default.
 
 #### GA-based baseline approach：
 
-The GA-based technique is implemented based on the public artifact [2]. [PyGAD](https://github.com/ahmedfgad/GeneticAlgorithmPython) is an open-source easy-to-use Python 3 library for building the genetic algorithm and optimizing machine learning algorithms. It supports Keras and PyTorch. 
+The GA-based technique is implemented based on the public artifact[2]. [PyGAD](https://github.com/ahmedfgad/GeneticAlgorithmPython) is an open-source easy-to-use Python 3 library for building the genetic algorithm and optimizing machine learning algorithms. It supports Keras and PyTorch. 
 
 Our GA-based baseline approach takes a test input as an individual and the number of covered last-mile functionality points as the fitness function.
 
@@ -60,7 +60,7 @@ We empirically set the ratio of mutation and crossover to 0.4 and 0.8 respective
 
 #### DL-based baseline approach：
 
-Our DL-based CDI test input generation technique [25] in our paper models the relationship between test inputs and functionality points.  It takes the test inputs randomly generated for determining last-mile functionality points as training data and the coverage result of a test input on each functionality point as the label of the test input. The output of the model is the probability of each functionality point being covered by a generated test input. If all the functionality points with large predicted probabilities (over 0.6 in our study) for a generated test input have been covered before, it filters out this test input since it is less likely to improve the functional coverage. 
+Our DL-based CDI test input generation technique in our paper models the relationship between test inputs and functionality points.  It takes the test inputs randomly generated for determining last-mile functionality points as training data and the coverage result of a test input on each functionality point as the label of the test input. The output of the model is the probability of each functionality point being covered by a generated test input. If all the functionality points with large predicted probabilities (over 0.6 in our study) for a generated test input have been covered before, it filters out this test input since it is less likely to improve the functional coverage. 
 
 The newly generated test inputs are also used to fine-tune the model for 10 epochs and the weights with the best performance are saved for subsequent iterations.
 
@@ -78,7 +78,7 @@ class MyNet(nn.Module):
             layers.append(nn.ReLU(inplace=True))
             return layers
         
-		# INPUT_DIM and OUTPUT_DIM depend on the input shape
+	# INPUT_DIM and OUTPUT_DIM depend on the input shape
         # and output shape of the specific CDI. 
         self.model = nn.Sequential(
             *block(INPUT_DIM, 128),
