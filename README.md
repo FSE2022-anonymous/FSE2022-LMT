@@ -96,7 +96,7 @@ class MyNet(nn.Module):
 
 ### Results
 
-We release the detailed experimental results of LMT and other baselines in `overall_results.xlsx`, which demonstrate the effectiveness of our method.
+We release the detailed experimental results of LMT and other baselines in `results/Coverages Results.md`, which demonstrate the effectiveness of our method.
 
 #### Reference
 
